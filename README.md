@@ -10,6 +10,3 @@ A website that help origanize workproduct
 
 ## Website
 https://amir-hackett.github.io/taskmaster-pro/
-
-
-### ©️2019 Run Buddy, Inc 
