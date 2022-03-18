@@ -6,12 +6,22 @@ var createTask = function(taskText, taskDate, taskList) {
   var taskSpan = $("<span>")
     .addClass("badge badge-primary badge-pill")
     .text(taskDate);
-  var taskP = $("<p>")
+  var taskP = $("<p>")     
     .addClass("m-1")
     .text(taskText);
 
   // append span and p element to parent li
   taskLi.append(taskSpan, taskP);
+
+    // append to ul list on the page
+    $("#list-" + taskList).append(taskLi);
+
+     // check due date
+    auditTask(taskLi);
+
+    // append to ul list on the page
+    $("#list-" + taskList).append(taskLi);
+  };
 
   // gives elements the ability to be draged and sorted
   $(".card .list-group").sortable({
@@ -67,9 +77,6 @@ var createTask = function(taskText, taskDate, taskList) {
     }
   })
 
-  // append to ul list on the page
-  $("#list-" + taskList).append(taskLi);
-};
 
 var loadTasks = function() {
   tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -216,6 +223,11 @@ $("#trash").droppable({
     console.log("out")
   }
 })
+
+var auditTask = function(taskEl) {
+  // to enusre element is getting to the function
+  console.log(taskEl)
+}
 
 // modal was triggered
 $("#task-form-modal").on("show.bs.modal", function() {
