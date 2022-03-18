@@ -71,22 +71,6 @@ var createTask = function(taskText, taskDate, taskList) {
   $("#list-" + taskList).append(taskLi);
 };
 
-// gives trash ability to remove
-$("#trash").droppable({
-  accept: ".card .list-group-item",
-  tolerance: "touch",
-  drop: function(event, ui){
-    ui.draggable.remove()
-    console.log("drop")
-  },
-  over: function(event, ui){
-    console.log("over")
-  },
-  out: function(event, ui){
-    console.log("out")
-  }
-})
-
 var loadTasks = function() {
   tasks = JSON.parse(localStorage.getItem("tasks"));
 
@@ -170,12 +154,26 @@ $(".list-group").on("click", "span", function(){
   // swap out elements
   $(this).replaceWith(dateInput)
 
+  //enable jquery ui datepicker
+  dateInput.datepicker({
+    minDate: 1,
+    onClose: function() {
+      // when calendar is closed, force a "change" event on the dateInput
+      $(this).trigger("change")
+    }
+  })
+
   // automatically focus on new element
   dateInput.trigger("focus")
 })
 
+// gives us a date picker
+$("#modalDueDate").datepicker({
+  minDate: 1
+})
+
 // value of due date was changed
-$(".list-group").on("blur", "input[type='text']", function() {
+$(".list-group").on("change", "input[type='text']", function() {
   //get current text
   var date = $(this).val()
 
@@ -201,6 +199,22 @@ $(".list-group").on("blur", "input[type='text']", function() {
 
   //replace input with span element
   $(this).replaceWith(taskSpan)
+})
+
+// gives trash ability to remove
+$("#trash").droppable({
+  accept: ".card .list-group-item",
+  tolerance: "touch",
+  drop: function(event, ui){
+    ui.draggable.remove()
+    console.log("drop")
+  },
+  over: function(event, ui){
+    console.log("over")
+  },
+  out: function(event, ui){
+    console.log("out")
+  }
 })
 
 // modal was triggered
