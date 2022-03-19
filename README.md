@@ -15,6 +15,7 @@ The following animation demonstrates the application functionality:
 * CSS
 * JavaScript
 * jQuery
+* Bootstrap
 
 ## Website
 https://amir-hackett.github.io/taskmaster-pro/
