@@ -8,7 +8,7 @@ This application will allow users to create tasks with descriptions and due date
 
 ## Mock Up
 The following animation demonstrates the application functionality:
-[recording of index.html](./assets/screen-record.gif)
+![recording of index.html](./assets/screen-record.gif)
 
 ## Built With
 * HTML
