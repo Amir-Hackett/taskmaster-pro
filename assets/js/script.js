@@ -30,16 +30,18 @@ var createTask = function(taskText, taskDate, taskList) {
     tolerance: "pointer",
     helper: "clone",
     activate: function(event) {
-      console.log("activate", this)
+      $(this).addClass("dropover")
+      $(".bottom-trash").addClass("bottom-trash-drag")
     },
     decativate: function(event) {
-      console.log("deactivate", this)
+      $(this).removeClass("dropover")
+      $(".bottom-trash").removeClass("bottom-trash-drag")
     },
     over: function(event) {
-      console.log("over", event.target)
+      $(event.target).addClass("dropover-active")
     },
     out: function(event) {
-      console.log("update", this)
+      $(event.target).removeClass("dropover-active")
     },
     
     update: function(event) {
