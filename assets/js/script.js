@@ -295,3 +295,9 @@ $("#remove-tasks").on("click", function() {
 
 // load tasks for the first time
 loadTasks();
+
+setInterval(function() {
+  $(".card .list-group-item").each(function(index, el){
+    auditTask(el)
+  }) // code to execute: 10000 x 60 = 1 minute then x by 30 = 30 minutes
+}, (1000 * 60) * 30)
