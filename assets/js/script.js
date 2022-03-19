@@ -29,11 +29,11 @@ var createTask = function(taskText, taskDate, taskList) {
     scroll: false,
     tolerance: "pointer",
     helper: "clone",
-    activate: function(event) {
+    activate: function(event, ui) {
       $(this).addClass("dropover")
       $(".bottom-trash").addClass("bottom-trash-drag")
     },
-    decativate: function(event) {
+    deactivate: function(event, ui) {
       $(this).removeClass("dropover")
       $(".bottom-trash").removeClass("bottom-trash-drag")
     },
@@ -43,7 +43,6 @@ var createTask = function(taskText, taskDate, taskList) {
     out: function(event) {
       $(event.target).removeClass("dropover-active")
     },
-    
     update: function(event) {
       //array to store the task data in
       var tempArr = []
@@ -213,21 +212,23 @@ $(".list-group").on("change", "input[type='text']", function() {
   auditTask($(taskSpan).closest(".list-group-item"))
 })
 
-// gives trash ability to remove
+// trash icon can be dropped onto
 $("#trash").droppable({
   accept: ".card .list-group-item",
   tolerance: "touch",
-  drop: function(event, ui){
-    ui.draggable.remove()
-    console.log("drop")
+  drop: function(event, ui) {
+    // remove dragged element from the dom
+    ui.draggable.remove();
+    $(".bottom-trash").removeClass("bottom-trash-active");
   },
-  over: function(event, ui){
-    console.log("over")
+  over: function(event, ui) {
+    console.log(ui);
+    $(".bottom-trash").addClass("bottom-trash-active");
   },
-  out: function(event, ui){
-    console.log("out")
+  out: function(event, ui) {
+    $(".bottom-trash").removeClass("bottom-trash-active");
   }
-})
+});
 
 var auditTask = function(taskEl) {
   // get date from the task element
