@@ -195,10 +195,10 @@ $(".list-group").on("change", "input[type='text']", function() {
   .closest(".list-group-item")
   .index()
 
-  // update task in array and re-save to localstorage
-  tasks[status][index].date = date
-  saveTasks()
-
+   // update task in array and re-save to localstorage
+   tasks[status][index].date = date
+   saveTasks()
+ 
   // recreate span element with bootstrap classes
   var taskSpan = $("<span>")
   .addClass("badge badge-primary badge-pill")
@@ -206,6 +206,9 @@ $(".list-group").on("change", "input[type='text']", function() {
 
   //replace input with span element
   $(this).replaceWith(taskSpan)
+
+  // Pass task's <li> element into auditTask() to check new due date
+  auditTask($(taskSpan).closest(".list-group-item"))
 })
 
 // gives trash ability to remove
@@ -225,8 +228,26 @@ $("#trash").droppable({
 })
 
 var auditTask = function(taskEl) {
-  // to enusre element is getting to the function
-  console.log(taskEl)
+  // get date from the task element
+  var date = $(taskEl)
+  .find("span")
+  .text()
+  .trim()
+
+  //convert to moment object at 5:00pm
+  var time = moment(date, "L")
+  .set("hour", 17)
+
+  // remove old classes from element
+  $(taskEl).removeClass("list-group-item-warning list-group-item-danger")
+
+  //apply new class if task is near/over due date
+  if (moment().isAfter(time)) {
+    $(taskEl).addClass("list-group-item-danger")
+  }
+  else if (Math.abs(moment().diff(time, "days")) <= 2) {
+    $(taskEl).addClass("list-group-item-warning")
+  }
 }
 
 // modal was triggered
